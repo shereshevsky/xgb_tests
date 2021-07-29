@@ -1,0 +1,1 @@
+{"n_estimators": 15, "max_depth": 6, "objective": "reg:squarederror", "nthread": 2}
