@@ -1,0 +1,1 @@
+docker build . -f Dockerfile.intel -t "xgb_tests_intel"

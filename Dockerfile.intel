@@ -1,15 +1,14 @@
-FROM ubuntu:20.04
+FROM intel/intel-optimized-ml:xgboost
 ARG AWS_REGION=us-east-1
-ARG VERSION
 
 RUN sed -i "s/archive.ubuntu.com/${AWS_REGION}.ec2.archive.ubuntu.com/g" /etc/apt/sources.list
 RUN apt-get update -y && apt-get -y install software-properties-common && apt-add-repository -y ppa:deadsnakes && apt-get update -y && apt-get install -y python3.7 python3.7-dev python3-pip git && ln -sf /usr/bin/python3.7 /usr/bin/python3
 RUN apt-get update -y
 RUN apt-get upgrade -y && apt-get install -y less vim-tiny telnet libyajl2 libyajl-dev libyaml-dev && pip3 install --upgrade pip
+#RUN conda install pandas fastparquet python-snappy
+#RUN conda install -c intel scikit-learn
 
-COPY requirements_$VERSION.txt /copy/requirements.txt
-
-RUN pip3 install -r /copy/requirements.txt
+RUN python3.8 -m pip install xgboost pandas pyarrow scikit-learn
 
 COPY data /opt/data
 COPY main.py /opt
